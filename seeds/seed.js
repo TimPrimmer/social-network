@@ -7,6 +7,8 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/social-network'
 });
 
 
+
+
 const userSeed = [
   {
     username: "Tim",
@@ -40,13 +42,47 @@ const userSeed = [
   }
 ];
 
+const thoughtSeed = [
+  {
+    reactionBody: "Wow what a cool post!",
+    username: "Tim"
+  },
+  {
+    reactionBody: "Not very epic.",
+    username: "Tim"
+  },
+  {
+    reactionBody: "Looks like a lot of fun!",
+    username: "Sally"
+  },
+  {
+    reactionBody: "Hey werent you on that netflix show?",
+    username: "Mick"
+  },
+];
+
 db.User.deleteMany({})
   .then(() => db.User.collection.insertMany(userSeed))
   .then(data => {
-    console.log(data.result.n + ' records inserted!');
+    console.log('user records inserted!');
+  })
+  .catch(err => {
+    console.error(err);
+    console.log('error inserting user records.');
+    process.exit(1);
+  });
+
+db.Thought.deleteMany({})
+  .then(() => db.Thought.collection.insertMany(thoughtSeed))
+  .then(data => {
+    console.log('thought records inserted!');
     process.exit(0);
   })
   .catch(err => {
     console.error(err);
+    console.log('error inserting thought records.');
     process.exit(1);
   });
+
+
+
