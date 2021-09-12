@@ -2,7 +2,7 @@
 
 ## Description 
 
-Social network API using NoSql, Express, and Mongoose
+Social network API using MongoDB, Express, and Mongoose
 
 ## Table of Contents 
 
