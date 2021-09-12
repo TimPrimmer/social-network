@@ -39,11 +39,20 @@ const thoughtController = {
       });
   },
 
+
   // createThought
   createThought({ body }, res) {
     Thought.create(body)
-      .then(dbThoughtData => res.json(dbThoughtData))
-      .catch(err => res.status(400).json(err));
+      .then(dbThoughtData => {
+        User.findOneAndUpdate(
+          { _id: body.userId },
+          { $push: { thoughts: dbThoughtData } },
+          { new: true }
+        ).then(dbThoughtData => res.json(dbThoughtData)).catch(err => {
+          console.log(err);
+          res.status(400).json({ message: `Invalid UserID`});
+        });
+      })
   },
 
   // update Thought by id
