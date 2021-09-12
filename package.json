@@ -1,0 +1,25 @@
+{
+  "name": "social-network",
+  "version": "1.0.0",
+  "description": "A social network api using NoSql and Mongoose",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TimPrimmer/social-network.git"
+  },
+  "author": "Tim Primmer",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TimPrimmer/social-network/issues"
+  },
+  "homepage": "https://github.com/TimPrimmer/social-network#readme"
+}
