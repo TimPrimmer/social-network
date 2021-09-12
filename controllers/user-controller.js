@@ -1,4 +1,4 @@
-const { User } = require('../models');
+const { User, Thought } = require('../models');
 
 const userController = {
   // get all Users
@@ -20,10 +20,14 @@ const userController = {
   // get one User by id
   getUserById({ params }, res) {
     User.findOne({ _id: params.id })
-      // .populate({
-      //   path: 'comments',
-      //   select: '-__v'
-      // })
+      .populate({
+        path: 'thoughts',
+        select: '-__v'
+      })
+      .populate({
+        path: 'friends',
+        select: '-__v'
+      })
       .select('-__v')
       .then(dbUserData => {
         // If no User is found, send 404
@@ -59,17 +63,31 @@ const userController = {
       .catch(err => res.status(400).json(err));
   },
 
+
   // delete User
   deleteUser({ params }, res) {
-    User.findOneAndDelete({ _id: params.id })
+    User.findOne({ _id: params.id })
       .then(dbUserData => {
-        if (!dbUserData) {
-          res.status(404).json({ message: 'No User found with this id!' });
-          return;
+        for (let x = 0; x < dbUserData.thoughts.length; x++) {
+          let thoughtId = dbUserData.thoughts[x];
+          Thought.findOneAndDelete({ _id: thoughtId }).catch(err => res.status(400).json(err));
         }
-        res.json(dbUserData);
+      }).then(dbUserData => {
+        User.findOneAndDelete({ _id: params.id })
+          .then(dbUserData => {
+
+            if (!dbUserData) {
+              res.status(404).json({ message: 'No User found with this id!' });
+              return;
+            }
+            res.json({ message: 'User and associated thoughts deleted!' });
+          })
+          .catch(err => res.status(400).json(err));
       })
       .catch(err => res.status(400).json(err));
+
+
+
   },
 
   // add new friend to users friend list
@@ -80,7 +98,7 @@ const userController = {
       { new: true }
     ).then(dbUserData => res.json(dbUserData)).catch(err => {
       console.log(err);
-      res.status(400).json({ message: 'Invalid user or friend ID'});
+      res.status(400).json({ message: 'Invalid user or friend ID' });
     });
   },
 
@@ -92,7 +110,7 @@ const userController = {
       { new: true }
     ).then(dbUserData => res.json(dbUserData)).catch(err => {
       console.log(err);
-      res.status(400).json({ message: 'Invalid user or friend ID'});
+      res.status(400).json({ message: 'Invalid user or friend ID' });
     });
   }
 

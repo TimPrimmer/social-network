@@ -44,19 +44,19 @@ const userSeed = [
 
 const thoughtSeed = [
   {
-    reactionBody: "Wow what a cool post!",
+    thoughtText: "Wow what a cool post!",
     username: "Tim"
   },
   {
-    reactionBody: "Not very epic.",
+    thoughtText: "Not very epic.",
     username: "Tim"
   },
   {
-    reactionBody: "Looks like a lot of fun!",
+    thoughtText: "Looks like a lot of fun!",
     username: "Sally"
   },
   {
-    reactionBody: "Hey werent you on that netflix show?",
+    thoughtText: "Hey werent you on that netflix show?",
     username: "Mick"
   },
 ];

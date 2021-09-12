@@ -6,7 +6,8 @@ const ReactionSchema = new Schema(
     // set custom id to avoid confusion with parent _id
     reactionId: {
       type: Schema.Types.ObjectId,
-      default: () => new Types.ObjectId()
+      default: () => new Types.ObjectId(),
+      auto: true
     },
     reactionBody: {
       type: String,
@@ -26,7 +27,8 @@ const ReactionSchema = new Schema(
   {
     toJSON: {
       getters: true
-    }
+    },
+    id: false
   }
 );
 
